@@ -1,4 +1,4 @@
-use clap::{Arg, Command};
+use clap::{value_parser, Arg, Command};
 
 fn main() {
     let matches = Command::new("echor")
@@ -10,7 +10,8 @@ fn main() {
                 .value_name("TEXT")
                 .help("Input text")
                 .required(true)
-                .num_args(1..),
+                .num_args(1..)
+                .value_parser(value_parser!(String)),
         )
         .arg(
             Arg::new("omit_newline")
@@ -20,5 +21,12 @@ fn main() {
         )
         .get_matches();
 
-    println!("{:#?}", matches);
+    let text: Vec<String> = matches
+        .get_many::<String>("text")
+        .unwrap()
+        .map(|x| x.to_string())
+        .collect();
+    let omit_newline = matches.get_flag("omit_newline");
+
+    print!("{}{}", text.join(" "), if omit_newline { "" } else { "\n" });
 }
