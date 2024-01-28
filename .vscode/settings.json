@@ -1,5 +1,9 @@
 {
+  "[rust]": {
+    "editor.formatOnSave": true
+  },
   "cSpell.words": [
-    "echor",
+    "catr",
+    "echor"
   ]
 }
